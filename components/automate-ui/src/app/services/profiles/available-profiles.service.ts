@@ -1,7 +1,7 @@
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { ChefSessionService } from '../chef-session/chef-session.service';
 
 import { environment } from 'environments/environment';
@@ -33,7 +33,10 @@ export class AvailableProfilesService {
     const params = new HttpParams().set('owner', this.chefSessionService.username);
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    return this.httpClient.post(url, body, {params, headers});
+    return this.httpClient.post(url, body, {params, headers}).pipe(
+      catchError((err) => {
+        return throwError(err);
+      }));
   }
 
   // Get a tarfile for a profile (name required, version optional)

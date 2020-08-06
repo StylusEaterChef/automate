@@ -267,7 +267,7 @@ describe('ProfilesOverviewComponent', () => {
       describe('when response status is an 400', () => {
         beforeEach(() => {
           spyOn(component, 'refreshProfiles');
-          spyOn(component, 'showDownloadError');
+          spyOn(component, 'showAuthError');
           spyOn(component.availableProfilesService, 'installMarketProfile')
             .and.returnValue(throwError({ status: 400 }));
           component.getProfiles(
@@ -280,7 +280,7 @@ describe('ProfilesOverviewComponent', () => {
         });
 
         it('displays the error', () => {
-          expect(component.showDownloadError).toHaveBeenCalled();
+          expect(component.showAuthError).toHaveBeenCalled();
         });
       });
     });
